@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsIn, MaxLength, IsDefined, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class UserInfoDTO {
   @IsString()
