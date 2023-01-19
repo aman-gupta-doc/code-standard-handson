@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UserInfoDTO } from './dtos/user-detail.dto';
-import { Response } from 'express'
 
 @Injectable()
 export class AppService {
@@ -8,33 +7,40 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getInitialsWithFullName(userInfo:UserInfoDTO){
+  private joinNamesWithSpace(fn: string, mn: string, ln: string): string {
+    return [fn, mn, ln].filter((name) => !!name).join(' ');
+  }
 
-    var type = 1
+  getInitialsWithFullName(userInfo: UserInfoDTO) {
+    const fullName = this.joinNamesWithSpace(
+      userInfo.firstName,
+      userInfo.middleName,
+      userInfo.lastName,
+    );
 
-    var fullName = [userInfo.firstName, userInfo.middleName, userInfo.lastName].filter((name) => !!name).join(' ');
+    const fathersFullName = this.joinNamesWithSpace(
+      userInfo.fatherFirstName,
+      userInfo.fatherMiddleName,
+      userInfo.fatherLastName,
+    );
 
+    const mothersFullName = this.joinNamesWithSpace(
+      userInfo.motherFirstName,
+      userInfo.motherMiddleName,
+      userInfo.motherLastName,
+    );
 
-
-    // ToDo complete this
-    var fathersFullName = ""
-
-    var mothersFullName = ""
-
-    var initials = ''
-
-    // ToDo check if full name exist and get first letter of full name
-    // write code here
+    const initials = this.joinNamesWithSpace(
+      fullName.charAt(0),
+      fathersFullName.charAt(0),
+      mothersFullName.charAt(0),
+    );
 
     return {
       fullName: fullName,
       fathersFullName: fathersFullName,
       mothersFullName: mothersFullName,
-      initials: initials
-    }
-
-
-    
-
+      initials: initials,
+    };
   }
 }
